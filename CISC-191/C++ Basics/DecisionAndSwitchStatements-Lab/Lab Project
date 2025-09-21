@@ -3,15 +3,11 @@
 The challenges I faced during the exercise.
 
 ```python
-# _________________________________________________________________________________________________
-
-# _________________________________________________________________________________________________
-
-# _________________________________________________________________________________________________
-
-# _________________________________________________________________________________________________
-
-# _________________________________________________________________________________________________
+# Reflection: At first I forgot how to use enum class, I thought it was just enum without class. Took me a while to figure out the syntax and that I needed static_cast later.
+# Reflection: I kept forgetting to reset cin when the user typed letters. At first my program would just loop forever with wrong input.
+# Reflection: I had problems here because I didn’t clear the buffer right. I used ignore with numericlimits, and that fixed it.
+# Reflection: I forgot to use * at first and wrote "x". Compiler yelled at me.
+# "Invalid choice. Please pick 1 - 5.\n"; Reflection: this part was easy to forget, I only caught it when I typed 99 by accident.
 
 # _________________________________________________________________________________________________
 
@@ -22,8 +18,6 @@ The challenges I faced during the exercise.
 using namespace std;
 
 // make an enum for the menu choices
-// Reflection: At first I forgot how to use enum class, I thought it was just enum without class. 
-// Took me a while to figure out the syntax and that I needed static_cast later.
 enum class MenuChoice { Add = 1, Subtract, Multiply, Divide, Quit };
 
 int main() {
@@ -41,8 +35,6 @@ int main() {
 
         int menuInput;
         cin >> menuInput;
-// Reflection: I kept forgetting to reset cin when the user typed letters.
-        // At first my program would just loop forever with wrong input.
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numericlimits<streamsize>::max(), '\n');
@@ -72,8 +64,7 @@ int main() {
         cout << "Enter first number: ";
         cin >> num1;
 
-        // Reflection: I had problems here because I didn’t clear the buffer right.
-        // My teacher said to use ignore with numericlimits, and that fixed it.
+        
         if (cin.fail()) {
             cin.clear();
             cin.ignore(numericlimits<streamsize>::max(), '\n');
@@ -115,7 +106,6 @@ int main() {
             case MenuChoice::Multiply:
                 result = num1 * num2;
                 cout << "Result: " << result << endl;
-                // Reflection: I forgot to use  at first and wrote "x". Compiler yelled at me.
                 break;
 case MenuChoice::Divide:
                 if (num2 == 0) {
