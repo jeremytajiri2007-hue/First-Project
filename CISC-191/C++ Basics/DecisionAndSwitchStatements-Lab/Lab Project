@@ -1,1 +1,119 @@
+#include <iostream>
+#include <limits>
+using namespace std;
 
+// make an enum for the menu choices
+// Reflection: At first I forgot how to use enum class, I thought it was just enum without class. 
+// Took me a while to figure out the syntax and that I needed static_cast later.
+enum class MenuChoice { Add = 1, Subtract, Multiply, Divide, Quit };
+
+int main() {
+    bool keepRunning = true;
+
+    while (keepRunning) {
+        // show the menu
+        cout << "\n=== Calculator Menu ===\n";
+        cout << "1. Add\n";
+        cout << "2. Subtract\n";
+        cout << "3. Multiply\n";
+        cout << "4. Divide\n";
+        cout << "5. Quit\n";
+        cout << "Enter your choice: ";
+
+        int menuInput;
+        cin >> menuInput;
+// Reflection: I kept forgetting to reset cin when the user typed letters.
+        // At first my program would just loop forever with wrong input.
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numericlimits<streamsize>::max(), '\n');
+            cout << "That was not a number. Try again.\n";
+            continue;
+        }
+
+        // check if the number is in range
+        if (menuInput < 1 || menuInput > 5) {
+            cout << "Invalid choice. Please pick 1 - 5.\n";
+            // Reflection: this part was easy to forget, I only caught it when I typed 99 by accident.
+            continue;
+        }
+
+        // turn the number into a MenuChoice
+        MenuChoice choice = staticcast<MenuChoice>(menuInput);
+
+// quit option
+        if (choice == MenuChoice::Quit) {
+            cout << "Exiting program now.\n";
+            keepRunning = false;
+            break;
+        }
+
+        // get numbers from the user
+        double num1, num2;
+        cout << "Enter first number: ";
+        cin >> num1;
+
+        // Reflection: I had problems here because I didn’t clear the buffer right.
+        // My teacher said to use ignore with numericlimits, and that fixed it.
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numericlimits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+        cout << "Enter second number: ";
+        cin >> num2;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+    if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please try again.\n";
+            continue;
+        }
+
+        // do the math
+        double result = 0;
+        switch (choice) {
+            case MenuChoice::Add:
+                result = num1 + num2;
+                cout << "Result: " << result << endl;
+                // Reflection: this one was straightforward, just plus sign.
+                break;
+
+            case MenuChoice::Subtract:
+                result = num1 - num2;
+                cout << "Result: " << result << endl;
+                break;
+
+            case MenuChoice::Multiply:
+                result = num1 * num2;
+                cout << "Result: " << result << endl;
+                // Reflection: I forgot to use  at first and wrote "x". Compiler yelled at me.
+                break;
+case MenuChoice::Divide:
+                if (num2 == 0) {
+                    cout << "Error: cannot divide by zero.\n";
+                    // Reflection: This part confused me because I thought division by zero
+                    // would just give me infinity, but it actually broke the program.
+                } else {
+                    result = num1 / num2;
+                    cout << "Result: " << result << endl;
+                }
+                break;
+
+            default:
+                cout << "Something went wrong.\n";
+                break;
+        }
+    }
+
+    return 0;
+}
